@@ -16,21 +16,27 @@ void glfwKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int
         glfwSetWindowShouldClose(pWindow, GL_TRUE);
     }
 }
+static void glfwError(int id, const char* description)
+{
+    std::cout << description << std::endl;
+}
+
 int main(void)
 {
+    glfwSetErrorCallback(&glfwError);
     /* Initialize the library */
     if (!glfwInit()) {
         cout << "!glfwInit fail" << endl;
         return -1;
     }
-    glfwWindowHint(GLFW_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_VERSION_MINOR, 6);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
-    
+   
     GLFWwindow* pWindow = glfwCreateWindow(g_windowSizeX, g_windowSizeY, "Battle City", nullptr, nullptr);
-    if (!pWindow)
+    if (pWindow==nullptr)
     {
         cout << "glfwCreateWindow failed!" << endl;
         glfwTerminate();

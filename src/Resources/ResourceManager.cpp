@@ -3,6 +3,9 @@
 #include<sstream>
 #include<fstream>
 #include<iostream>
+#define STB_IMAGE_IMPLEMENTATION
+#define STBI_ONLY_PNG
+#include"stb_image.h"
 
 
 ResourceManager::ResourceManager(const string& executablePath) {
@@ -60,5 +63,18 @@ shared_ptr<Renderer::ShaderProgram> ResourceManager::getShaderProgram(const stri
 	return nullptr;
 	
 }
+void ResourceManager::loadTextures(const string& textureName, const string& texturePath) {
+	int channels = 0;
+	int width = 0;
+	int height = 0;
+	stbi_set_flip_vertically_on_load(true);
+	unsigned char*pixels =  stbi_load(string(m_path + "/" + texturePath).c_str(), &width, &height, & channels, 0);
 
+	if (!pixels) {
+		cout << "Cant load image" << texturePath <<endl;
+		return;
+	}
+	stbi_image_free(pixels);
+
+}
 

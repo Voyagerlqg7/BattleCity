@@ -2,8 +2,10 @@
 #include<string>
 #include<memory>
 #include<map>
+
 namespace Renderer {
 	class ShaderProgram;
+	class Texture2D;
 }
 using namespace std;
 class ResourceManager {
@@ -17,12 +19,16 @@ public:
 
 	shared_ptr<Renderer::ShaderProgram> loadShaders(const string& shaderName, const string& vertexPath, const string& fragmentPath);
 	shared_ptr<Renderer::ShaderProgram> getShaderProgram(const string& shaderName);
-	void loadTextures(const string& textureName, const string& texturePath);
+	shared_ptr<Renderer::Texture2D> loadTextures(const string& textureName, const string& texturePath);
+	shared_ptr<Renderer::Texture2D> getTexture(const string& textureName);
+
 
 private:
 	string getFileString(const string& relativeFilePath) const;
 	typedef map<const string, shared_ptr<Renderer::ShaderProgram>> ShaderProgramsMap;
 	ShaderProgramsMap m_shaderPrograms;
+	typedef map<const string, shared_ptr<Renderer::Texture2D>> TexturesMap; 
+	TexturesMap m_textures;
 
 	string m_path;
 };

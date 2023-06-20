@@ -12,7 +12,7 @@
 using namespace std;
 
 GLfloat point[] = {
-     0.0f, 0.5f,  0.0f,
+     0.0f, 50.f,  0.0f,
      50.f, -50.f,  0.0f,
     -50.f, -50.f, 0.0f
 };

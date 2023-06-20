@@ -6,6 +6,7 @@
 namespace Renderer {
 	class ShaderProgram;
 	class Texture2D;
+	class Sprite;
 }
 using namespace std;
 class ResourceManager {
@@ -21,6 +22,12 @@ public:
 	shared_ptr<Renderer::ShaderProgram> getShaderProgram(const string& shaderName);
 	shared_ptr<Renderer::Texture2D> loadTextures(const string& textureName, const string& texturePath);
 	shared_ptr<Renderer::Texture2D> getTexture(const string& textureName);
+	shared_ptr<Renderer::Sprite> loadSprite(const string& spriteName, 
+		const string& textureName,
+		const string& shaderName, 
+		const unsigned int spriteWidth,
+		const unsigned int spriteHeight);
+	shared_ptr<Renderer::Sprite> getSprite(const string& spriteName);
 
 
 private:
@@ -29,6 +36,9 @@ private:
 	ShaderProgramsMap m_shaderPrograms;
 	typedef map<const string, shared_ptr<Renderer::Texture2D>> TexturesMap; 
 	TexturesMap m_textures;
+
+	typedef map<const string, shared_ptr<Renderer::Sprite>> SpritesMap;
+	SpritesMap m_sprites;
 
 	string m_path;
 };

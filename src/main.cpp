@@ -101,7 +101,9 @@ int main(int argc, char** argv)
 
 
         auto tex = resourceManager.loadTextures("DefaultTexture", "res/textures/map_16x16.png");
-        auto pSprite = resourceManager.loadSprite("newSprite", "DefaultTexture", "SpriteShader", 50, 100);
+        vector<string> subTexturesNames = {};
+        auto pTextureAtlas = resourceManager.loadTextureAtlas("defaultTextureAtlas", "res/textures/map_16x16.png", move(subTexturesNames),16,16);
+        auto pSprite = resourceManager.loadSprite("newSprite", "defaultTextureAtlas", "SpriteShader", 100, 100,"");
         pSprite->setPosition(glm::vec2(300, 100));
         GLuint points_vbo = 0;
         glGenBuffers(1, &points_vbo);

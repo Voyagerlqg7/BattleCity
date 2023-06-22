@@ -2,8 +2,11 @@
 #include"ShaderProgram.h"
 #include"Texture2D.h"
 #include<glm/mat4x4.hpp>
+#include<glm/vec2.hpp>
 #include<glm/gtc/matrix_transform.hpp>
 #include "GLFW/glfw3.h"
+#include<string>
+
 
 
 
@@ -11,6 +14,7 @@ using namespace std;
 
 namespace Renderer {
 	Sprite::Sprite(const shared_ptr<Texture2D> pTexture,
+		const string initialSubTexture,
 		const shared_ptr<ShaderProgram> pShaderProgram,
 		const glm::vec2& position,
 		const glm::vec2& size,
@@ -32,15 +36,16 @@ namespace Renderer {
 			0.f, 0.f
 
 		};
+		auto subTexture = pTexture->getSubTexture(move(initialSubTexture));
 		const GLfloat textureCoords[] = {
 			//U-----V
-			0.f, 0.f,
-			0.f, 1.f,
-			1.f, 1.f,
+			subTexture.leftBottomUV.x, subTexture.leftBottomUV.y,
+			subTexture.leftBottomUV.x, subTexture.rightTopUV.y,
+			subTexture.rightTopUV.x, subTexture.rightTopUV.y,
 
-			1.f, 1.f,
-			1.f, 0.f,
-			0.f, 0.f
+			subTexture.rightTopUV.x, subTexture.rightTopUV.y,
+			subTexture.rightTopUV.x, subTexture.leftBottomUV.y,
+			subTexture.leftBottomUV.x, subTexture.leftBottomUV.y
 
 		};
 	

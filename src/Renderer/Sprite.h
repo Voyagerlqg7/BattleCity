@@ -18,11 +18,11 @@ namespace Renderer {
 		~Sprite();
 		Sprite(const Sprite&) = delete;
 		Sprite& operator = (const Sprite&) = delete;
-		void render() const;
+		virtual void render() const;
 		void setPosition(const glm::vec2& position);
 		void setSize(const glm::vec2& size);
 		void setRotation(const float rotation);
-	private:
+	protected:
 		shared_ptr<Texture2D> m_pTexture;
 		shared_ptr<ShaderProgram> m_pShaderProgram;
 		glm::vec2 m_position;

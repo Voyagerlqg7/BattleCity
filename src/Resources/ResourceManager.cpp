@@ -41,7 +41,7 @@ string ResourceManager::getFileString(const string& relativeFilePath)  {
 	return buffer.str();
 
 }
-shared_ptr<Renderer::ShaderProgram> ResourceManager::loadShaders(const string& shaderName, const string& vertexPath, const string& fragmentPath)
+shared_ptr<RenderEngine::ShaderProgram> ResourceManager::loadShaders(const string& shaderName, const string& vertexPath, const string& fragmentPath)
 {
 	string vertexString = getFileString(vertexPath);
 	if (vertexString.empty()) {
@@ -55,7 +55,7 @@ shared_ptr<Renderer::ShaderProgram> ResourceManager::loadShaders(const string& s
 		return nullptr;
 	}
 
-	shared_ptr<Renderer::ShaderProgram>& newShader = m_shaderPrograms.emplace(shaderName, std::make_shared<Renderer::ShaderProgram>(vertexString, fragmentString)).first->second;
+	shared_ptr<RenderEngine::ShaderProgram>& newShader = m_shaderPrograms.emplace(shaderName, std::make_shared<RenderEngine::ShaderProgram>(vertexString, fragmentString)).first->second;
 	if (newShader->isCompiled())
 	{
 		return newShader;
@@ -67,7 +67,7 @@ shared_ptr<Renderer::ShaderProgram> ResourceManager::loadShaders(const string& s
 
 	return nullptr;
 }
-shared_ptr<Renderer::ShaderProgram> ResourceManager::getShaderProgram(const string& shaderName) {
+shared_ptr<RenderEngine::ShaderProgram> ResourceManager::getShaderProgram(const string& shaderName) {
 	ShaderProgramsMap::const_iterator it = m_shaderPrograms.find(shaderName);
 	if (it !=m_shaderPrograms.end()) {
 		return it->second;
@@ -77,7 +77,7 @@ shared_ptr<Renderer::ShaderProgram> ResourceManager::getShaderProgram(const stri
 	return nullptr;
 	
 }
-shared_ptr<Renderer::Texture2D> ResourceManager::loadTextures(const string& textureName, const string& texturePath) {
+shared_ptr<RenderEngine::Texture2D> ResourceManager::loadTextures(const string& textureName, const string& texturePath) {
 	int channels = 0;
 	int width = 0;
 	int height = 0;
@@ -88,12 +88,12 @@ shared_ptr<Renderer::Texture2D> ResourceManager::loadTextures(const string& text
 		cout << "Cant load image" << texturePath <<endl;
 		return nullptr;
 	}
-	shared_ptr<Renderer::Texture2D> newTexture = m_textures.emplace(textureName, make_shared<Renderer::Texture2D>(width, height, pixels, channels, GL_NEAREST, GL_CLAMP_TO_EDGE)).first->second;
+	shared_ptr<RenderEngine::Texture2D> newTexture = m_textures.emplace(textureName, make_shared<RenderEngine::Texture2D>(width, height, pixels, channels, GL_NEAREST, GL_CLAMP_TO_EDGE)).first->second;
 
 	stbi_image_free(pixels);
 	return newTexture;
 }
-shared_ptr<Renderer::Texture2D> ResourceManager::getTexture(const string& textureName) {
+shared_ptr<RenderEngine::Texture2D> ResourceManager::getTexture(const string& textureName) {
 	TexturesMap::const_iterator it = m_textures.find(textureName);
 	if (it != m_textures.end()) {
 		return it->second;
@@ -102,7 +102,7 @@ shared_ptr<Renderer::Texture2D> ResourceManager::getTexture(const string& textur
 	cout << "Cant find the texture " << textureName << endl;
 	return nullptr;
 }
-shared_ptr<Renderer::Sprite> ResourceManager::loadSprite(const string& spriteName,
+shared_ptr<RenderEngine::Sprite> ResourceManager::loadSprite(const string& spriteName,
 													     const string& textureName,
 														 const string& shaderName,
 														 const unsigned int spriteWidth,
@@ -119,8 +119,8 @@ shared_ptr<Renderer::Sprite> ResourceManager::loadSprite(const string& spriteNam
 		cout << "Cant find the shader: " << shaderName << "for the sprite:" << spriteName << endl;
 		return nullptr;
 	}
-	shared_ptr<Renderer::Sprite> newSprite = m_sprites.emplace(spriteName,
-		make_shared<Renderer::Sprite>(
+	shared_ptr<RenderEngine::Sprite> newSprite = m_sprites.emplace(spriteName,
+		make_shared<RenderEngine::Sprite>(
 		pTexture,
 		subTextureName,
 		pShader, glm::vec2(0.f, 0.f),
@@ -128,7 +128,7 @@ shared_ptr<Renderer::Sprite> ResourceManager::loadSprite(const string& spriteNam
 	return newSprite;
 
 }
-shared_ptr<Renderer::AnimatedSprite> ResourceManager::loadAnimatedSprite(const string& spriteName,
+shared_ptr<RenderEngine::AnimatedSprite> ResourceManager::loadAnimatedSprite(const string& spriteName,
 																		 const string& textureName,
 																		 const string& shaderName,
 																		 const unsigned int spriteWidth,
@@ -145,8 +145,8 @@ shared_ptr<Renderer::AnimatedSprite> ResourceManager::loadAnimatedSprite(const s
 		cout << "Cant find the shader: " << shaderName << "for the sprite:" << spriteName << endl;
 		return nullptr;
 	}
-	shared_ptr<Renderer::AnimatedSprite> newSprite = m_animatedSprites.emplace(spriteName,
-		make_shared<Renderer::AnimatedSprite>(
+	shared_ptr<RenderEngine::AnimatedSprite> newSprite = m_animatedSprites.emplace(spriteName,
+		make_shared<RenderEngine::AnimatedSprite>(
 			pTexture,
 			subTextureName,
 			pShader, glm::vec2(0.f, 0.f),
@@ -154,7 +154,7 @@ shared_ptr<Renderer::AnimatedSprite> ResourceManager::loadAnimatedSprite(const s
 	return newSprite;
 
 }
-shared_ptr<Renderer::Sprite> ResourceManager::getSprite(const string& spriteName) {
+shared_ptr<RenderEngine::Sprite> ResourceManager::getSprite(const string& spriteName) {
 	SpritesMap::const_iterator it = m_sprites.find(spriteName);
 	if (it != m_sprites.end()) {
 		return it->second;
@@ -163,7 +163,7 @@ shared_ptr<Renderer::Sprite> ResourceManager::getSprite(const string& spriteName
 	cout << "Cant find the sprite " << spriteName << endl;
 	return nullptr;
 }
-shared_ptr<Renderer::AnimatedSprite> ResourceManager::getAnimatedSprite(const string& spriteName) {
+shared_ptr<RenderEngine::AnimatedSprite> ResourceManager::getAnimatedSprite(const string& spriteName) {
 	auto it = m_animatedSprites.find(spriteName);
 	if (it != m_animatedSprites.end()) {
 		return it->second;
@@ -172,7 +172,7 @@ shared_ptr<Renderer::AnimatedSprite> ResourceManager::getAnimatedSprite(const st
 	cout << "Cant find the animated sprites " << spriteName << endl;
 	return nullptr;
 }
-shared_ptr<Renderer::Texture2D> ResourceManager::loadTextureAtlas(const string& textureName,
+shared_ptr<RenderEngine::Texture2D> ResourceManager::loadTextureAtlas(const string& textureName,
 																  const string& texturePath,
 																  const vector<string> subTextures,
 																  const unsigned int subTextureWidth,

@@ -6,7 +6,7 @@
 #include<map>
 using namespace std;
 
-namespace Renderer {
+namespace RenderEngine {
 	class AnimatedSprite : public Sprite {
 	public:
 		AnimatedSprite(const shared_ptr<Texture2D> pTexture,

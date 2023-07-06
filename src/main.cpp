@@ -10,6 +10,7 @@
 #include"Resources/ResourceManager.h"
 #include"Renderer/Texture2D.h"
 #include"Renderer/Sprite.h"
+#include"Renderer/Renderer.h"
 #include"Game/Game.h"
 using namespace std;
 
@@ -21,7 +22,7 @@ Game g_game(g_windowSize);
 void glfwWindowSizeCallback(GLFWwindow * pWindow, int width, int height) {
     g_windowSize.x = width;
     g_windowSize.y = height;
-    glViewport(0,0, g_windowSize.x, g_windowSize.y);
+    RenderEngine::Renderer::setViewPort(width,height);
 }
 void glfwKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int mode) {
     if (key==GLFW_KEY_ESCAPE && action==GLFW_PRESS) {
@@ -64,11 +65,9 @@ int main(int argc, char** argv)
         cout << "Failed to initialize OpenGL context" << endl;
         return -1;
     }
-    cout << "Renderer: " << glGetString(GL_RENDERER) << endl;
-    cout << "OpenGl version"<< glGetString(GL_VERSION) << endl;
-
-    glClearColor(0, 0, 0, 1);
-
+    cout << "Renderer: " << RenderEngine::Renderer::getRendererStr() << endl;
+    cout << "OpenGl version"<< RenderEngine::Renderer::getVersionStr() << endl;
+    RenderEngine::Renderer::setClearColor(0, 0, 0, 1);
     
     {
         ResourceManager::setExecutablePath(argv[0]);
@@ -78,7 +77,7 @@ int main(int argc, char** argv)
         while (!glfwWindowShouldClose(pWindow))
         {
             /* Render here */
-            glClear(GL_COLOR_BUFFER_BIT);
+            RenderEngine::Renderer::Clear();
             g_game.render();
             /* Swap front and back buffers */
             glfwSwapBuffers(pWindow);

@@ -5,7 +5,7 @@
 #include<map>
 using namespace std;
 
-namespace Renderer {
+namespace RenderEngine {
 	 
 	AnimatedSprite::AnimatedSprite(const shared_ptr<Texture2D> pTexture,
 		const string initialSubTexture,

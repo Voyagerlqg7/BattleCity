@@ -5,7 +5,7 @@
 
 using namespace std;
 
-namespace Renderer {
+namespace RenderEngine {
 	class AnimatedSprite;
 }
 class Tank {
@@ -16,14 +16,14 @@ public:
 		Left,
 		Right
 	};
-	Tank(shared_ptr<Renderer::AnimatedSprite>  pSprite, const float velocity, const glm::vec2& position);
+	Tank(shared_ptr<RenderEngine::AnimatedSprite>  pSprite, const float velocity, const glm::vec2& position);
 	void render()const;
 	void setOrientation(const EOrientation eOrientation);
 	void move(const bool move);
 	void update(const uint64_t delta);
 private:
 	EOrientation m_eOrientation;
-	shared_ptr<Renderer::AnimatedSprite> m_pSprite;
+	shared_ptr<RenderEngine::AnimatedSprite> m_pSprite;
 	bool m_move;
 	float m_velocity;
 	glm::vec2 m_position;

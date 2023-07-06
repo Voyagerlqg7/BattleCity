@@ -7,7 +7,7 @@
 
 using namespace std;
 
-namespace Renderer {
+namespace RenderEngine {
 	class Texture2D {
 	public:
 		struct SubTexture2D {

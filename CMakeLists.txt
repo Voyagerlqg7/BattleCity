@@ -44,6 +44,8 @@ add_subdirectory(external/glfw)
 target_link_libraries(${PROJECT_NAME} glfw)
 
 include_directories(external/glm)
+include_directories(external/rapidjson/include)
+
 
 add_subdirectory(external/glad)
 target_link_libraries(${PROJECT_NAME} glad)

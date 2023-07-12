@@ -10,6 +10,8 @@
 #define STBI_ONLY_PNG
 #include"stb_image.h"
 #include<vector>
+#include<rapidjson/document.h>
+#include<rapidjson/error/en.h>
 
 using namespace std;
 
@@ -201,4 +203,31 @@ shared_ptr<RenderEngine::Texture2D> ResourceManager::loadTextureAtlas(const stri
 
 }
 
+bool ResourceManager::loadJSONResources(const string& JSONPath) {
+
+	const string JSONString = getFileString(JSONPath);
+	if (JSONString.empty()){
+		cerr << "No JSON res file" << endl;
+		return false;
+	}
+	rapidjson::Document document;
+	rapidjson::ParseResult parseResult = document.Parse(JSONString.c_str());
+	if (!parseResult) {
+		cerr << "JSON Parse Error" << rapidjson::GetParseError_En(parseResult.Code())<< "(" << parseResult.Offset()<<")" << endl;
+		cerr << "IN JSON File: " << JSONPath << endl;
+		return false;
+	}
+	auto shadersIT =  document.FindMember("shaders");
+	if (shadersIT != document.MemberEnd()) {
+		for (const auto& currentShader : shadersIT->value.GetArray())
+		{
+			const string name = currentShader["name"].GetString();
+			const string filePath_v = currentShader["filePath_v"].GetString();
+			const string filePath_f = currentShader["filePath_f"].GetString();
+			loadShaders(name, filePath_v, filePath_f);
+		}
+	}
+	
+
+}
 

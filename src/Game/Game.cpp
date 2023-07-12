@@ -32,31 +32,22 @@ void Game::setkey(const int key, const int action) {
 	m_keys[key] = action;
 }
 bool Game::init() {
+    ResourceManager::loadJSONResources("res/resources.json");
 
-
-    auto pDefaultShaderProgram = ResourceManager::loadShaders("DefaultShader", "res/shaders/vertex.txt", "res/shaders/fragment.txt");
-    if (!pDefaultShaderProgram) {
-        cout << "Cant create shader program  DefaultShader" << endl;
-        return false;
-    }
-
-    auto pSpriteShaderProgram = ResourceManager::loadShaders("SpriteShader", "res/shaders/vSprite.txt", "res/shaders/fSprite.txt");
-    if (!pDefaultShaderProgram) {
-        cout << "Cant create shader program  SpriteShader" << endl;
-        return false;
-    }
+   
+    auto pSpriteShaderProgram = ResourceManager::getShaderProgram("spriteShader");
+    ResourceManager::loadTextures("DefaultTexture", "res/textures/map_16x16.png");
+    
 
 
     vector<string> subTexturesNames = {
     };
 
-    ResourceManager::loadTextures("DefaultTexture", "res/textures/map_16x16.png");
     auto pTextureAtlas = ResourceManager::loadTextureAtlas("defaultTextureAtlas", "res/textures/map_16x16.png", move(subTexturesNames), 16, 16);
     auto pSprite = ResourceManager::loadSprite("newSprite", "defaultTextureAtlas", "SpriteShader", 100, 100, "");
     pSprite->setPosition(glm::vec2(300, 100));
 
-    pDefaultShaderProgram->use();
-    pDefaultShaderProgram->setInt("tex", 0);
+    
 
 
     glm::mat4 modelMatrix_1 = glm::mat4(1.f);
@@ -66,8 +57,6 @@ bool Game::init() {
     modelMatrix_2 = glm::translate(modelMatrix_2, glm::vec3(590.f, 200.f, 0.f));
 
     glm::mat4 projectionMatrix = glm::ortho(0.f, static_cast<float>(m_windowSize.x), 0.f, static_cast<float>(m_windowSize.y), -100.f, 100.f);
-
-    pDefaultShaderProgram->setMatrix4("projectionMat", projectionMatrix);
 
     pSpriteShaderProgram->use();
     pSpriteShaderProgram->setInt("tex", 0);

@@ -47,6 +47,9 @@ public:
 															const vector<string> subTextures,
 															const unsigned int subTextureWidth,
 															const unsigned int subTextureHeight);
+	static bool loadJSONResources(const string& JSONPath);
+
+
 private:
 	static string getFileString(const string& relativeFilePath);
 	typedef map<const string, shared_ptr<RenderEngine::ShaderProgram>> ShaderProgramsMap;

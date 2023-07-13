@@ -21,6 +21,8 @@ ResourceManager::TexturesMap ResourceManager::m_textures;
 ResourceManager::SpritesMap ResourceManager::m_sprites;
 ResourceManager::AnimatedSpritesMap ResourceManager::m_animatedSprites;
 string ResourceManager::m_path;
+vector<vector<string>> ResourceManager::m_levels;
+
 void ResourceManager::unloadAllResources() {
 	m_shaderPrograms.clear();
 	m_textures.clear();
@@ -107,8 +109,6 @@ shared_ptr<RenderEngine::Texture2D> ResourceManager::getTexture(const string& te
 shared_ptr<RenderEngine::Sprite> ResourceManager::loadSprite(const string& spriteName,
 													     const string& textureName,
 														 const string& shaderName,
-														 const unsigned int spriteWidth,
-														 const unsigned int spriteHeight,
 														 const string& subTextureName ) {
 
 	auto pTexture = getTexture(textureName);
@@ -125,16 +125,13 @@ shared_ptr<RenderEngine::Sprite> ResourceManager::loadSprite(const string& sprit
 		make_shared<RenderEngine::Sprite>(
 		pTexture,
 		subTextureName,
-		pShader, glm::vec2(0.f, 0.f),
-		glm::vec2(spriteWidth, spriteHeight))).first->second;
+		pShader)).first->second;
 	return newSprite;
 
 }
 shared_ptr<RenderEngine::AnimatedSprite> ResourceManager::loadAnimatedSprite(const string& spriteName,
 																		 const string& textureName,
 																		 const string& shaderName,
-																		 const unsigned int spriteWidth,
-																		 const unsigned int spriteHeight,
 																		 const string& subTextureName) {
 
 	auto pTexture = getTexture(textureName);
@@ -151,8 +148,7 @@ shared_ptr<RenderEngine::AnimatedSprite> ResourceManager::loadAnimatedSprite(con
 		make_shared<RenderEngine::AnimatedSprite>(
 			pTexture,
 			subTextureName,
-			pShader, glm::vec2(0.f, 0.f),
-			glm::vec2(spriteWidth, spriteHeight))).first->second;
+			pShader)).first->second;
 	return newSprite;
 
 }
@@ -246,6 +242,22 @@ bool ResourceManager::loadJSONResources(const string& JSONPath) {
 			loadTextureAtlas(name, filePath, std::move(subTextures), subTextureWidth, subTextureHeight);
 		}
 	}
+	auto spritesIt = document.FindMember("sprites");
+	if (spritesIt != document.MemberEnd())
+	{
+		for (const auto& currentSprite : spritesIt->value.GetArray())
+		{
+			const std::string name = currentSprite["name"].GetString();
+			const std::string textureAtlas = currentSprite["textureAtlas"].GetString();
+			const std::string shader = currentSprite["shader"].GetString();
+			const std::string subTexture = currentSprite["initialSubTexture"].GetString();
+			auto pSprite = loadSprite(name, textureAtlas, shader, subTexture);
+			if (!pSprite) {
+				continue;
+			}
+			
+		}
+	}
 
 
 	auto animatedSpritesIT = document.FindMember("animatedSprites");
@@ -254,16 +266,40 @@ bool ResourceManager::loadJSONResources(const string& JSONPath) {
 			const string name = currentAnimatedSprite["name"].GetString();
 			const string textureAtlas = currentAnimatedSprite["textureAtlas"].GetString();
 			const string shader = currentAnimatedSprite["shader"].GetString();
-			const unsigned int initialWidth = currentAnimatedSprite["initialWidth"].GetUint();
-			const unsigned int initialHeight = currentAnimatedSprite["initialHeight"].GetUint();
 			const string initialSubTexture = currentAnimatedSprite["initialSubTexture"].GetString();
-			auto pAnimatedSprite = loadAnimatedSprite(name, textureAtlas, shader, initialWidth, initialHeight, initialSubTexture);
+			auto pAnimatedSprite = loadAnimatedSprite(name, textureAtlas, shader, initialSubTexture);
 			if (!pAnimatedSprite) {
 				continue;
 			}
 
 		}
 	}
+
+	auto levelsIt = document.FindMember("levels");
+	if (levelsIt != document.MemberEnd()) {
+		for (const auto& currentLevel : levelsIt->value.GetArray()) {
+			const auto description = currentLevel["description"].GetArray();
+			vector<string> levelRows;
+			levelRows.reserve(description.Size());
+			size_t maxLength = 0;
+			for (const auto& currentRow :description) {
+				levelRows.emplace_back(currentRow.GetString());
+				if (maxLength< levelRows.back().length()) {
+					maxLength = levelRows.back().length();
+				}
+			}
+			for (auto currentRow : levelRows) {
+				while (currentRow.length() < maxLength) {
+					currentRow.append("D");
+				}
+			}
+			m_levels.emplace_back(move(levelRows));
+
+		}
+		return true;
+	}
+
+
 
 }
 

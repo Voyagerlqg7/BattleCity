@@ -18,15 +18,9 @@ using namespace std;
 namespace RenderEngine {
 	Sprite::Sprite(const shared_ptr<Texture2D> pTexture,
 		const string initialSubTexture,
-		const shared_ptr<ShaderProgram> pShaderProgram,
-		const glm::vec2& position,
-		const glm::vec2& size,
-		const float rotation) 
+		const shared_ptr<ShaderProgram> pShaderProgram) 
 		: m_pTexture(move(pTexture))
 		, m_pShaderProgram(move(pShaderProgram))
-		, m_position(position)
-		, m_size(size)
-		, m_rotation(rotation)
 	{
 		const GLfloat vertexCoords[] = {
 		    
@@ -80,15 +74,15 @@ namespace RenderEngine {
 	Sprite::~Sprite() {
 
 	}
-	void Sprite::render() const {
+	void Sprite::render(const glm::vec2& position, const glm::vec2& size, const float rotation) const {
 		m_pShaderProgram->use();
 		glm::mat4 model(1.f);
 
-		model = glm::translate(model, glm::vec3(m_position, 0.f));
-		model = glm::translate(model, glm::vec3(0.5f * m_size.x, 0.5f * m_size.y, 0.f));
-		model = glm::rotate(model, glm::radians(m_rotation), glm::vec3(0, 0, 1));
-		model = glm::translate(model, glm::vec3(-0.5f * m_size.x, -0.5f * m_size.y, 0.f));
-		model = glm::scale(model, glm::vec3(m_size, 1.f));
+		model = glm::translate(model, glm::vec3(position, 0.f));
+		model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.f));
+		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0, 0, 1));
+		model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.f));
+		model = glm::scale(model, glm::vec3(size, 1.f));
 		m_pShaderProgram->setMatrix4("modelMat", model);
 		glActiveTexture(GL_TEXTURE);
 		m_pTexture->bind();
@@ -96,14 +90,4 @@ namespace RenderEngine {
 		Renderer::draw(m_vertexArray,m_indexBuffer,*m_pShaderProgram);
 
 	}
-	void Sprite::setPosition(const glm::vec2& position) {
-		m_position = position;
-	}
-	void Sprite::setSize(const glm::vec2& size) {
-		m_size = size;
-	}
-	void Sprite::setRotation(const float rotation) {
-		m_rotation = rotation; 
-	}
-
 }

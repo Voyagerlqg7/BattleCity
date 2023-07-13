@@ -19,8 +19,6 @@ add_executable(${PROJECT_NAME}
 	src/Renderer/AnimatedSprite.h
 	src/Game/Game.cpp 
 	src/Game/Game.h
-	src/Game/Tank.h 
-	src/Game/Tank.cpp 
 	src/Renderer/VertexBuffer.cpp 
 	src/Renderer/VertexBuffer.h
 	src/Renderer/IndexBuffer.h
@@ -31,6 +29,16 @@ add_executable(${PROJECT_NAME}
 	src/Renderer/VertexBufferLayout.cpp
 	src/Renderer/Renderer.h 
 	src/Renderer/Renderer.cpp 
+
+	src/Game/GameObjects/IGameObject.cpp 
+	src/Game/GameObjects/IGameObject.h 
+	src/Game/GameObjects/Tank.h 
+	src/Game/GameObjects/Tank.cpp
+	src/Game/Level.h 
+	src/Game/Level.cpp
+	src/Game/GameObjects/BrickWall.cpp 
+	src/Game/GameObjects/BrickWall.h
+
 )
 
 

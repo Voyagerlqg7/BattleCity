@@ -15,8 +15,8 @@
 using namespace std;
 
 
-glm::ivec2 g_windowSize(640, 480);
-Game g_game(g_windowSize);
+glm::ivec2 g_windowSize(13*16,14*16);
+unique_ptr<Game> g_game= make_unique<Game>(g_windowSize);
 
 
 void glfwWindowSizeCallback(GLFWwindow * pWindow, int width, int height) {
@@ -28,7 +28,7 @@ void glfwKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int
     if (key==GLFW_KEY_ESCAPE && action==GLFW_PRESS) {
         glfwSetWindowShouldClose(pWindow, GL_TRUE);
     }
-    g_game.setkey(key,action);
+    g_game->setkey(key,action);
 }
 static void glfwError(int id, const char* description)
 {
@@ -71,20 +71,21 @@ int main(int argc, char** argv)
     
     {
         ResourceManager::setExecutablePath(argv[0]);
-        g_game.init();
+        g_game->init();
 
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(pWindow))
         {
             /* Render here */
             RenderEngine::Renderer::Clear();
-            g_game.render();
+            g_game->render();
             /* Swap front and back buffers */
             glfwSwapBuffers(pWindow);
 
             /* Poll for and process events */
             glfwPollEvents();
         }
+        g_game = nullptr;
         ResourceManager::unloadAllResources();
     }
     glfwTerminate();

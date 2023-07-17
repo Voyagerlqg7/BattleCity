@@ -15,7 +15,6 @@ namespace RenderEngine {
             m_totalDuration += m_pSprite->getFrameDuration(currentFrameId);
         }
     }
-
     void SpriteAnimator::update(const double delta)
     {
         m_currentAnimationTime += delta;

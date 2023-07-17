@@ -8,7 +8,6 @@ namespace RenderEngine {
 	class ShaderProgram;
 	class Texture2D;
 	class Sprite;
-	class AnimatedSprite;
 }
 using namespace std;
 class ResourceManager {
@@ -32,12 +31,6 @@ public:
 												   const string& subTextureName= "Default");
 	static shared_ptr<RenderEngine::Sprite> getSprite(const string& spriteName);
 
-	static shared_ptr<RenderEngine::AnimatedSprite> loadAnimatedSprite(const string& spriteName,
-																   const string& textureName,
-																   const string& shaderName,
-																   const string& subTextureName = "Default");
-	static shared_ptr<RenderEngine::AnimatedSprite> getAnimatedSprite(const string& spriteName);
-
 	static shared_ptr<RenderEngine::Texture2D> loadTextureAtlas(const string& textureName,
 															const string& texturePath,
 															const vector<string> subTextures,
@@ -57,8 +50,6 @@ private:
 	typedef map<const string, shared_ptr<RenderEngine::Sprite>> SpritesMap;
 	static SpritesMap m_sprites;
 
-	typedef map<const string, shared_ptr<RenderEngine::AnimatedSprite>> AnimatedSpritesMap;
-	static AnimatedSpritesMap m_animatedSprites;
 
 	static vector<vector<string>> m_levels;
 

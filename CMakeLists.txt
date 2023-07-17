@@ -15,8 +15,6 @@ add_executable(${PROJECT_NAME}
 	src/Renderer/Texture2D.cpp
 	src/Renderer/Sprite.cpp 
 	src/Renderer/Sprite.h
-	src/Renderer/AnimatedSprite.cpp
-	src/Renderer/AnimatedSprite.h
 	src/Game/Game.cpp 
 	src/Game/Game.h
 	src/Renderer/VertexBuffer.cpp 
@@ -38,6 +36,8 @@ add_executable(${PROJECT_NAME}
 	src/Game/Level.cpp
 	src/Game/GameObjects/BrickWall.cpp 
 	src/Game/GameObjects/BrickWall.h
+	src/Renderer/SpriteAnimator.cpp 
+	src/Renderer/SpriteAnimator.h 
 
 )
 

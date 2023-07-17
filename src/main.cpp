@@ -29,12 +29,12 @@ void glfwWindowSizeCallback(GLFWwindow * pWindow, int width, int height) {
     unsigned int viewPortLeftOffset = 0;
     unsigned int viewPortBottomOffset = 0;
 
-    if (g_windowSize.x / g_windowSize.y > map_aspect_ratio) {
-        viewPortWidth = g_windowSize.y * map_aspect_ratio;
+    if (static_cast<float>(g_windowSize.x / g_windowSize.y) > map_aspect_ratio) {
+        viewPortWidth = static_cast<unsigned int>(g_windowSize.y * map_aspect_ratio);
         viewPortLeftOffset = (g_windowSize.x - viewPortWidth) / 2;
     }
     else {
-        viewPortHeight = g_windowSize.x / map_aspect_ratio;
+        viewPortHeight = static_cast<unsigned int>( g_windowSize.x / map_aspect_ratio);
         viewPortBottomOffset = (g_windowSize.y - viewPortHeight) / 2;
     }
     RenderEngine::Renderer::setViewPort(viewPortWidth,viewPortHeight, viewPortLeftOffset,viewPortBottomOffset);

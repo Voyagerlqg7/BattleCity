@@ -6,17 +6,14 @@ project(${PROJECT_NAME})
 set(CMAKE_CXX_STANDARD 17)
 add_executable(${PROJECT_NAME} 
 	src/main.cpp
+
+
 	src/Renderer/ShaderProgram.cpp
 	src/Renderer/ShaderProgram.h
-	src/Resources/ResourceManager.cpp
-	src/Resources/ResourceManager.h
-	src/Resources/stb_image.h
 	src/Renderer/Texture2D.h
 	src/Renderer/Texture2D.cpp
 	src/Renderer/Sprite.cpp 
 	src/Renderer/Sprite.h
-	src/Game/Game.cpp 
-	src/Game/Game.h
 	src/Renderer/VertexBuffer.cpp 
 	src/Renderer/VertexBuffer.h
 	src/Renderer/IndexBuffer.h
@@ -27,6 +24,12 @@ add_executable(${PROJECT_NAME}
 	src/Renderer/VertexBufferLayout.cpp
 	src/Renderer/Renderer.h 
 	src/Renderer/Renderer.cpp 
+	src/Renderer/SpriteAnimator.cpp 
+	src/Renderer/SpriteAnimator.h 
+
+	src/Resources/ResourceManager.cpp
+	src/Resources/ResourceManager.h
+	src/Resources/stb_image.h
 
 	src/Game/GameObjects/IGameObject.cpp 
 	src/Game/GameObjects/IGameObject.h 
@@ -34,12 +37,15 @@ add_executable(${PROJECT_NAME}
 	src/Game/GameObjects/Tank.cpp
 	src/Game/GameObjects/BetonWall.cpp 
 	src/Game/GameObjects/BetonWall.h
-	src/Game/Level.h 
-	src/Game/Level.cpp
 	src/Game/GameObjects/BrickWall.cpp 
 	src/Game/GameObjects/BrickWall.h
-	src/Renderer/SpriteAnimator.cpp 
-	src/Renderer/SpriteAnimator.h 
+	src/Game/GameObjects/Trees.h 
+	src/Game/GameObjects/Trees.cpp 
+
+	src/Game/Game.cpp 
+	src/Game/Game.h
+	src/Game/Level.h 
+	src/Game/Level.cpp
 
 )
 

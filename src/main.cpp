@@ -83,6 +83,7 @@ int main(int argc, char** argv)
     cout << "Renderer: " << RenderEngine::Renderer::getRendererStr() << endl;
     cout << "OpenGl version"<< RenderEngine::Renderer::getVersionStr() << endl;
     RenderEngine::Renderer::setClearColor(0, 0, 0, 1);
+    RenderEngine::Renderer::setDepthTest(true);
     
     {
         ResourceManager::setExecutablePath(argv[0]);

@@ -49,6 +49,8 @@ add_executable(${PROJECT_NAME}
 	src/Game/GameObjects/Eagle.h
 	src/Game/GameObjects/Border.h 
 	src/Game/GameObjects/Border.cpp
+	src/Game/GameObjects/Bullet.h 
+	src/Game/GameObjects/Bullet.cpp 
 
 	src/Game/Game.cpp 
 	src/Game/Game.h
@@ -56,6 +58,8 @@ add_executable(${PROJECT_NAME}
 	src/Game/Level.cpp
 	src/System/Timer.h 
 	src/System/Timer.cpp 
+	src/Physics/PhysicsEngine.h 
+	src/Physics/PhysicsEngine.cpp
 
 )
 

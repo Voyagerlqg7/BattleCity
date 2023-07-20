@@ -62,7 +62,7 @@ add_executable(${PROJECT_NAME}
 	src/Physics/PhysicsEngine.h 
 	src/Physics/PhysicsEngine.cpp
 	src/Game/GameStates/StartScreen.h 
-	
+	src/Game/GameStates/StartScreen.cpp
 
 )
 

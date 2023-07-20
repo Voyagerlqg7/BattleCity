@@ -61,6 +61,8 @@ add_executable(${PROJECT_NAME}
 	src/System/Timer.cpp 
 	src/Physics/PhysicsEngine.h 
 	src/Physics/PhysicsEngine.cpp
+	src/Game/GameStates/StartScreen.h 
+	
 
 )
 

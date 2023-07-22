@@ -63,9 +63,11 @@ add_executable(${PROJECT_NAME}
 	src/Physics/PhysicsEngine.cpp
 	src/Game/GameStates/StartScreen.h 
 	src/Game/GameStates/StartScreen.cpp
+	src/Game/AIComponent.h 
+	src/Game/AIComponent.cpp 
 
 )
-
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)

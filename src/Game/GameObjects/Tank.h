@@ -7,7 +7,7 @@
 #include "IGameObject.h"
 #include "../../Renderer/SpriteAnimator.h"
 #include "../../System/Timer.h"
-//#include "../AIComponent.h"
+#include "../AIComponent.h"
 
 namespace RenderEngine {
     class Sprite;
@@ -122,7 +122,7 @@ private:
     bool m_hasShield;
     bool m_bShieldOnSpawn;
 
-   // std::unique_ptr<AIComponent> m_pAIComponent;
+    std::unique_ptr<AIComponent> m_pAIComponent;
 
     static const std::string& getTankSpriteFromType(const ETankType eType);
 };
